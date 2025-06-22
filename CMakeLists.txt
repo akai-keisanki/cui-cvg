@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.28.3)
 project(CUICVG LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_library(cvg STATIC lib/cvg.cc)
 target_include_directories(cvg PRIVATE include)
 
