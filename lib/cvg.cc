@@ -1,35 +1,45 @@
 #include "cvg.hh"
 
+// stdc++
+#include <stdexcept>
+#include <algorithm>
+
 // generator class
 
-CVG::CVG (void)
+CVG::CVG (void) {}
+
+void CVG::add_character_group (const char& group)
 {
-  // TODO
+  character_groups[group];
 }
 
-void CVG::add_group (const char&)
+void CVG::remove_character_group (const char& group)
 {
-  // TODO
+  character_groups.erase(group);
 }
 
-void CVG::remove_group (const char&)
+void CVG::clean_character_group (const char& group)
 {
-  // TODO
+  auto group_it = character_groups.find(group);
+  if (group_it == character_groups.end()) throw std::out_of_range("Unset character group");
+
+  group_it->second.clear();
 }
 
-void CVG::clean_group (const char&)
+void CVG::character_group_add (const char& group, const wchar_t& character)
 {
-  // TODO
+  auto group_it = character_groups.find(group);
+  if (group_it == character_groups.end()) throw std::out_of_range("Unset character group");
+
+  group_it->second.push_back(character);
 }
 
-void CVG::group_add_character (const char&, const wchar_t&)
+void CVG::character_group_remove (const char& group, const wchar_t& character)
 {
-  // TODO
-}
+  auto group_it = character_groups.find(group);
+  if (group_it == character_groups.end()) throw std::out_of_range("Unset character group");
 
-void CVG::group_remove_character (const char&, const wchar_t&)
-{
-  // TODO
+  group_it->second.erase(std::find(group_it->second.begin(), group_it->second.end(), character));
 }
 
 void CVG::add_syllable_pattern (const char&, const std::string&)
