@@ -3,6 +3,7 @@ pub trait IGroup
     fn new (label : &String) -> Self;
     fn add (&mut self, ch : &String) -> ();
     fn get_chars (&self) -> &Vec::<String>;
+    fn get_label (&self) -> &String;
     fn clear (&mut self) -> ();
 }
 
@@ -32,6 +33,11 @@ impl IGroup for Group
         &self.chars
     }
 
+    fn get_label (&self) -> &String
+    {
+        &self.label
+    }
+
     fn clear (&mut self) -> ()
     {
         self.chars.clear();
@@ -44,6 +50,7 @@ pub trait IGroupManager
     fn new () -> Self;
     fn group (&mut self, label : &String) -> Option<&mut Group>;
     fn add (&mut self, label : &String) -> ();
+    fn list (&self) -> &Vec::<Group>;
 }
 
 pub struct GroupManager
@@ -71,5 +78,10 @@ impl IGroupManager for GroupManager
         {
             self.groups.push(Group::new(label));
         }
+    }
+
+    fn list (&self) -> &Vec::<Group>
+    {
+        &self.groups
     }
 }
