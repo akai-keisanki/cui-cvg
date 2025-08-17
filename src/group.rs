@@ -51,6 +51,7 @@ pub trait IGroupManager
     fn group (&mut self, label : &String) -> Option<&mut Group>;
     fn add (&mut self, label : &String) -> ();
     fn list (&self) -> &Vec::<Group>;
+    fn clear (&mut self) -> ();
 }
 
 pub struct GroupManager
@@ -83,5 +84,10 @@ impl IGroupManager for GroupManager
     fn list (&self) -> &Vec::<Group>
     {
         &self.groups
+    }
+
+    fn clear (&mut self) -> ()
+    {
+        self.groups.clear();
     }
 }

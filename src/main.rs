@@ -52,7 +52,7 @@ fn main () -> ()
                 if let Err(err) = expect_next_command(&commands, &mut command_index)
                 { println!("{}", err.to_string()); }
                 group_manager.add(&commands[command_index as usize]);
-            }
+            },
             "list" =>
             {
                 for group in group_manager.list()
@@ -64,8 +64,50 @@ fn main () -> ()
                     }
                     println!("");
                 }
+            },
+            "label" =>
+            {
+                if let Err(err) = expect_next_command(&commands, &mut command_index)
+                { println!("{}", err.to_string()); }
+
+                if let Some(group) = group_manager.group(&commands[command_index as usize])
+                {
+
+                    if let Err(err) = expect_next_command(&commands, &mut command_index)
+                    { println!("{}", err.to_string()); }
+
+                    match commands[command_index as usize].as_str()
+                    {
+                    "add" =>
+                    {
+                        for ch in &commands[(command_index+1) as usize..commands.len()]
+                        { group.add(ch); }
+                    },
+                    "clear" =>
+                    {
+                        group.clear();
+                    },
+                    "list" =>
+                    {
+                        for ch in group.get_chars()
+                        {
+                            print!("{ch} ");
+                        }
+                        println!("");
+                    }
+                    command => println!("Group command {command} not found!")
+                    }
+                }
+                else
+                {
+                    println!("Group not found!");
+                }
             }
-            command => println!("Command {command} not found!")
+            "clear" =>
+            {
+                group_manager.clear();
+            }
+            command => println!("Group command {command} not found!")
             }
         }
         command => println!("Command {command} not found!")
